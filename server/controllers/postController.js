@@ -1,6 +1,9 @@
-import Post from "../models/postModel";
+import Post from "../models/postModel.js";
 
 import { v2 as cloudinary } from "cloudinary";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -27,6 +30,7 @@ const uploadPost = async (req, res) => {
   try {
     const { name, prompt, photo } = req.body;
     const photoUrl = await cloudinary.uploader.upload(photo);
+    console.log(photoUrl);
 
     const newPost = await Post.create({
       name,

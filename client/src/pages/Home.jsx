@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import { Card, FormField, Loader } from "../components";
 
@@ -13,23 +14,33 @@ const Home = () => {
   const fetchPosts = async () => {
     setLoading(true);
 
-    try {
-      const response = await fetch("https://dalle-arbb.onrender.com/api/v1/post", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    axios
+      .get("api/posts")
+      .then((res) => {
+        setAllPosts(res.data.data.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
       });
 
-      if (response.ok) {
-        const result = await response.json();
-        setAllPosts(result.data.reverse());
-      }
-    } catch (err) {
-      alert(err);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(false);
+    // try {
+    //   const response = await fetch("https://dalle-arbb.onrender.com/api/v1/post", {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   });
+
+    //   if (response.ok) {
+    //     const result = await response.json();
+    //     setAllPosts(result.data.reverse());
+    //   }
+    // } catch (err) {
+    //   alert(err);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   useEffect(() => {

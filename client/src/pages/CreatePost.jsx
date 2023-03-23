@@ -52,6 +52,7 @@ const CreatePost = () => {
         .post("/api/posts", { ...form })
         .then((res) => {
           setLoading(false);
+          navigate('/')
           // console.log(res);
         })
         .catch((err) => {
